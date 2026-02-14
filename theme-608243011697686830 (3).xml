@@ -1363,6 +1363,80 @@ body#layout .sideB{width:40%}
 --m-hideAll: &#39;<b:eval expr='(data:vars.m_hideAll + &quot;&quot;).cssEscaped'/>&#39;;
 }
 
+/* -----------------------------
+   Cyberpunk / Futuristic skin
+   - neon accents, animated BG
+   - improved styling for posts, code, media, comments
+   ----------------------------- */
+:root{
+  /* core palette */
+  --bodyB: radial-gradient(ellipse at 10% 10%, rgba(255,45,149,0.06), transparent 8%), radial-gradient(ellipse at 90% 80%, rgba(3,198,252,0.04), transparent 12%), linear-gradient(180deg,#05010a 0%, #081028 60%, #04030a 100%);
+  --bodyC: #dbeaff; /* light cyan for readable text */
+  --linkC: #FF2D95; /* neon magenta */
+  --linkB: linear-gradient(90deg,#00f0ff55,#ff2d9555);
+  --headerB: rgba(2,6,20,0.6);
+  --contentB: rgba(6,6,12,0.6);
+  --contentBs: rgba(255,255,255,0.02);
+  --contentBa: rgba(255,255,255,0.01);
+  --contentL: rgba(255,255,255,0.04);
+  --selectB: rgba(255,45,149,0.18);
+  --synxB: #0b0b12; /* code bg */
+  --synxC: #9bf0ff; /* code text */
+  --thumbSb: linear-gradient(90deg, rgba(255,45,149,0.05) 0%, rgba(0,240,255,0.03) 60%);
+  --transB: rgba(255,255,255,0.02);
+}
+
+/* animated layered background (non-blocking) */
+body::before{
+  content: "";
+  position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(600px 400px at 10% 20%, rgba(255,45,149,0.06), transparent 10%),
+    radial-gradient(500px 300px at 85% 75%, rgba(0,240,255,0.05), transparent 8%),
+    linear-gradient(135deg, rgba(8,2,40,0.6), rgba(2,6,20,0.8));
+  mix-blend-mode: screen; animation: cp-bg 18s linear infinite; opacity: .95;
+}
+@keyframes cp-bg{0%{transform:translate3d(0,0,0) scale(1)}50%{transform:translate3d(2%,1%,0) scale(1.02)}100%{transform:translate3d(0,0,0) scale(1)}}
+body::after{
+  content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background: repeating-linear-gradient(transparent, transparent 2px, rgba(255,255,255,0.01) 3px);
+  opacity: .06; animation: cp-scan 8s linear infinite;
+}
+@keyframes cp-scan{0%{background-position:0 0}100%{background-position:0 1000px}}
+
+/* Neon accents */
+a, .button, .mnMn li a, .lbL a{ color:var(--linkC); text-shadow:0 0 12px rgba(255,45,149,0.12); }
+a:hover, .button:hover{ filter:brightness(1.03); box-shadow:0 10px 40px rgba(0,0,0,0.5), 0 0 30px color-mix(in srgb, var(--linkC) 30%, transparent); }
+
+/* Cards, content areas */
+.fixLs, .itemPp, .itemFt, .pS, .blogP, .pInf, .pCmnts, .widget{ background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02)); border:1px solid rgba(255,255,255,0.04); backdrop-filter: blur(6px); }
+
+/* Images & media */
+.pS img, .psImg img, .glImg img, figure img{ box-shadow: 0 8px 40px rgba(0,0,0,0.6), 0 0 30px color-mix(in srgb, var(--linkC) 12%, transparent); border-radius:10px; border:1px solid rgba(255,255,255,0.03); }
+
+/* Code blocks */
+pre, code, .cmCo{ background:var(--synxB); color:var(--synxC); border-radius:8px; padding:12px; border:1px solid rgba(255,255,255,0.03); box-shadow: inset 0 -6px 30px rgba(0,0,0,0.6); }
+pre{ overflow:auto; border-left:3px solid var(--linkC); }
+
+/* Blockquotes */
+blockquote{ border-left:4px solid var(--linkC); background: linear-gradient(90deg, rgba(255,45,149,0.02), transparent); padding:12px 18px; color:var(--bodyC); }
+
+/* Comments */
+.pCmnts .cmPar, .cmCo i[rel=code], .cmAv{ background:transparent; border:1px solid rgba(255,255,255,0.03); }
+
+/* Buttons/tags */
+.button, .aCat .blogT a, .pLbls a{ background: linear-gradient(90deg, var(--linkC), #00f0ff); color:var(--white); box-shadow:0 6px 30px rgba(0,0,0,0.5), 0 0 20px color-mix(in srgb, var(--linkC) 30%, transparent); }
+
+/* Embeds/tables readability */
+iframe, table{ background: rgba(0,0,0,0.25); border:1px solid rgba(255,255,255,0.02); color:var(--bodyC); }
+
+/* Ensure text contrast inside post/widget */
+.pS, .post, .widget, .pCmnts{ color:var(--bodyC); }
+
+@media (prefers-reduced-motion: reduce){ body::before, body::after{ animation:none } }
+
+/* End Cyberpunk overrides */
+
 :root.lzD.drK, :root:not(.lzD) .modI:checked ~ .mainW {
 --statusC: <b:eval expr='data:vars.status_dark != &quot;transparent&quot; ? data:vars.status_dark : &quot;#000000&quot;'/>;
 --bodyB: var(--darkB);
